@@ -1,31 +1,51 @@
 require 'rubygems'
 require 'httparty'
+require 'io/console'
 
 class App
+  attr_reader :values
+  attr_accessor :playerAnswer, :curbAnswer
+
+  def  initialize
+    @playerAnswer = ''
+    @curbAnswer = HTTParty.get('http://localhost:3000/api/v1/throws')["item"]
+    @values = {:r => "Rock", :p => "Paper", :s => "Scissors"}
+  end
+
   def run
-    playerAnswer =''
-    reqThrow = HTTParty.get('http://localhost:3000/api/v1/throws')
-    puts "\n\nWelcome to Rock - Paper - Scissors! \n\nPress r for Rock\nPress s for Scissors\nPress p for Paper\n\n"
+    puts"#{'-' * 40} \nNew game: \n\nPress r for Rock\nPress s for Scissors\nPress p for Paper\nPress q to quit"
     playerAnswer = gets.chomp.downcase
-    curbAnswer = reqThrow["item"]
-    puts "\n\nCurb has chosen #{curbAnswer}"
-    define_winner(curbAnswer, playerAnswer)
+    exit if playerAnswer== 'q'
+    if ['r','s','p'].include? playerAnswer    
+      define_winner(curbAnswer[0], playerAnswer)
+    else
+      puts 'Please choose r, s, or p'
+      run
+    end
   end
 
   def define_winner(curbAns, playerAns)
+    $stdout.clear_screen
+    puts "You have chosen #{values[playerAns.to_sym]}"
+    puts "\nCurb has chosen #{values[curbAns.to_sym]}"
     case [curbAns, playerAns ]
-    when ['r' , 's'], ['s','p'], ['p', 'r']
-      puts "\n\nYou lost!"
-    when ['r' , 'r'], ['s','s'], ['p', 'p']
-      puts "\n\nYou tied!"
-    else
-      puts "\n\nYou Won!"
+      when ['r' , 's'], ['s','p'], ['p', 'r']
+        puts "\nYou lost!"
+      when ['r' , 'r'], ['s','s'], ['p', 'p']
+        puts "\nYou tied!"
+      else
+        puts "\nYou Won!"
     end
+    sleep(5)
+    $stdout.clear_screen
+    run
   end
 end
 
 def main
   app = App.new
+  $stdout.clear_screen
+  puts "#{'-' * 40}\n\nWelcome to Rock - Paper - Scissors!\n\n"
   app.run
 end
 

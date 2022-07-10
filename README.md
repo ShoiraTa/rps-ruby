@@ -1,14 +1,10 @@
-## Time Tracking App
+## Rock - Paper - Scissors
 
-A simple command line Ruby Rock - Paper - Scissors game.
+A simple command line Ruby app.
 
 ## Built With
 
 - Ruby
-
-## Demo
-
-https://track-mytime.herokuapp.com/
 
 ## Preview
 

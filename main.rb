@@ -8,7 +8,7 @@ class App
 
   def  initialize
     @playerAnswer = ''
-    @curbAnswer = HTTParty.get('http://localhost:3000/api/v1/throws')["item"]
+    @curbAnswer = HTTParty.get('https://rock-paper-scissors-sh.herokuapp.com/api/v1/throws')["item"]
     @values = {:r => "Rock", :p => "Paper", :s => "Scissors"}
   end
 
@@ -36,7 +36,7 @@ class App
       else
         puts "\nYou Won!"
     end
-    sleep(5)
+    sleep(3)
     $stdout.clear_screen
     run
   end

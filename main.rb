@@ -26,8 +26,6 @@ class App
 
   def define_winner(curbAns, playerAns)
     $stdout.clear_screen
-    puts "You have chosen #{values[playerAns.to_sym]}"
-    puts "\nCurb has chosen #{values[curbAns.to_sym]}"
     case [curbAns, playerAns ]
       when ['r' , 's'], ['s','p'], ['p', 'r']
         puts "\nYou lost!"
@@ -36,6 +34,8 @@ class App
       else
         puts "\nYou Won!"
     end
+    puts "\nYou have chosen #{values[playerAns.to_sym]}"
+    puts "Curb has chosen #{values[curbAns.to_sym]}"
     sleep(3)
     $stdout.clear_screen
     run
